@@ -79,7 +79,7 @@ function solveBFS(levelId, opts, budget) {
 
 /* 已知可行解（数据包校验精神：存在解且耗时 ≤ duration） */
 var KNOWN = {
-  1: { role: "duty", skills: [], seq: [{ a: "check", x: { key: "bus_voltage" } }, { a: "check", x: { key: "oil_temp" } }, { a: "check", x: { key: "dc_voltage" } }, { a: "check", x: { key: "ups_ok" } }, { a: "check", x: { key: "fire_ok" } }, { a: "mark", x: { key: "alarms" } }] },
+  1: { role: "duty", skills: [], seq: [{ wait: 2 }, { a: "check", x: { key: "bus_voltage" } }, { a: "check", x: { key: "oil_temp" } }, { a: "check", x: { key: "dc_voltage" } }, { a: "check", x: { key: "ups_ok" } }, { a: "check", x: { key: "fire_ok" } }, { a: "mark", x: { key: "alarms" } }] },
   2: { role: "duty", skills: [], seq: [{ a: "cap_on" }, { a: "cap_on" }, { wait: 21 }] },
   3: { role: "re_ops", skills: [], seq: [{ a: "reserve_on" }, { a: "unit_up" }, { wait: 11 }] },
   4: { role: "dispatch", skills: [], seq: [{ a: "bus_couple" }, { a: "bus_couple" }, { wait: 15 }] },
@@ -89,7 +89,7 @@ var KNOWN = {
   8: { role: "dispatch", skills: [], seq: [{ wait: 11 }, { a: "isolate" }, { a: "transfer" }, { wait: 12 }, { a: "isolate" }, { a: "transfer" }, { wait: 12 }, { a: "isolate" }, { a: "transfer" }, { wait: 30 }] },
   9: { role: "re_ops", skills: [], seq: [{ a: "ess_discharge" }, { wait: 16 }] },
   10: { role: "vpp", skills: [], seq: [{ a: "recruit_ev" }, { a: "recruit_ev" }, { a: "recruit_ess" }, { a: "recruit_hvac" }, { wait: 5 }] },
-  11: { role: "dispatch", skills: ["microgrid_ops"], seq: [{ a: "genset_on" }, { a: "ess_discharge" }, { a: "ess_discharge" }, { wait: 35 }, { wait: 31 }, { a: "check_sync" }, { a: "reconnect" }, { wait: 2 }] }
+  11: { role: "dispatch", skills: [], seq: [{ a: "genset_on" }, { a: "ess_discharge" }, { a: "ess_discharge" }, { wait: 35 }, { wait: 31 }, { a: "check_sync" }, { a: "reconnect" }, { wait: 2 }] }
 };
 
 Object.keys(KNOWN).forEach(function (lvId) {
@@ -110,6 +110,22 @@ Object.keys(KNOWN).forEach(function (lvId) {
   while (!s0.over && guard < 5000) { E.tick(s0, 0.25); guard++; }
   ok(s0.failed === true, "L" + lv + " 不做操作会超时失败（负路径）");
 });
+
+/* L11 定向负路径：主网来电后不经『同期检查』直接并网 → 触发 unsync_reconnect 红线失败 */
+(function () {
+  var s = E.build(11, { role: "dispatch", difficulty: "standard", assist: "balanced", skills: [] });
+  [{ a: "genset_on" }, { a: "ess_discharge" }, { a: "ess_discharge" }, { wait: 35 }, { wait: 31 }, { a: "reconnect" }].forEach(function (mv) { if (!s.over && !s.achieved) applyMove(s, mv); });
+  if (!s.over && !s.achieved) E.tick(s, 0.25);
+  ok(s.failed === true, "L11 不经同期检查直接并网会失败（unsync_reconnect 红线生效）");
+  ok(s.flags.unsync_reconnect === 1, "L11 unsync_reconnect 标志已置位");
+})();
+
+/* L1 回归：开局操作窗口内不得触发交接班红线（先 tick 数秒再操作仍可通关） */
+(function () {
+  var s = E.build(1, { role: "duty", difficulty: "standard", assist: "balanced", skills: [] });
+  for (var i = 0; i < 8; i++) E.tick(s, 0.25); /* 2 秒，玩家浏览窗口 */
+  ok(s.failed === false && s.over === false, "L1 开局 2 秒内不触发交接班红线（玩家窗口存在）");
+})();
 
 console.log("\nsolutions.test.js 结果：" + pass + " 通过 / " + fail + " 失败");
 process.exit(fail > 0 ? 1 : 0);

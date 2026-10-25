@@ -276,7 +276,7 @@ window.GDW.data = (function () {
           { id: "genset_on", name: "启动柴发", cost: 10, effect: { freq: 0.15, voltage: 0.02, genset: 1 }, limit_by: "genset" },
           { id: "load_shed", name: "切除次要负荷", cost: 5, effect: { freq: 0.10, load_served: -0.08 } },
           { id: "check_sync", name: "同期检查", cost: 8, effect: { sync_ok: 1 }, limit_by: "sync_ok" },
-          { id: "reconnect", name: "同期并网", cost: 12, effect: { island: 0, load_served: 0.1 }, limit_by: "island", need_skill: "microgrid_ops" }
+          { id: "reconnect", name: "同期并网", cost: 12, effect: { island: 0, load_served: 0.1 }, limit_by: "island" }
         ],
         rewards: { skills: ["microgrid_ops"], credit: 35, card: "为什么并列要'同期'" }
       }

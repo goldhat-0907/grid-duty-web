@@ -70,6 +70,7 @@ window.GDW.engine = (function () {
     var cf = 1;
     if (s.roleData.bonus && s.roleData.bonus.action_speed) cf *= s.roleData.bonus.action_speed;
     if (s.ownedSkills.indexOf("switching") >= 0 && action.op === "breaker") cf *= 0.5;
+    if (s.ownedSkills.indexOf("microgrid_ops") >= 0 && action.id === "reconnect") cf *= 0.5;
     return Math.max(1, Math.round(action.cost * cf));
   }
 
@@ -147,6 +148,8 @@ window.GDW.engine = (function () {
     if (actionId === "ess_discharge" || actionId === "ess_support" || actionId === "ess_genset" || actionId === "ancillary") s.metrics.greenCalls++;
     if (actionId === "degrade_realtime" || actionId === "recruit_curt" || actionId === "load_shed" || actionId === "interrupt") s.metrics.mistakes++;
     if (action.effect.availability && action.effect.availability < 0) s.metrics.mistakes++;
+    // 同期并网红线：未先『同期检查』（sync_ok）就并网 → 冲击电流，触发已声明的 unsync_reconnect 失败规则
+    if (actionId === "reconnect" && s.meters.sync_ok !== 1) s.flags.unsync_reconnect = 1;
     return eff;
   }
 
@@ -217,7 +220,7 @@ window.GDW.engine = (function () {
         else c.sec[r.meter] = 0;
         if (c.sec[r.meter] > r.sec) return { triggered: true, text: r.text || "关键负荷失电超时" };
       } else if (r.t === "handover") {
-        if (s.handover.missed > r.missedGT + slack || s.handover.misjudge > r.misjudgeGT + slack) {
+        if (s.over && (s.handover.missed > r.missedGT + slack || s.handover.misjudge > r.misjudgeGT + slack)) {
           return { triggered: true, text: "交接班漏检/误判过多" };
         }
       }
