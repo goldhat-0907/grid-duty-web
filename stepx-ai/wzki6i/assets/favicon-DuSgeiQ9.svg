@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="电网值班室">
-  <rect width="128" height="128" rx="28" fill="#0B121A"/>
-  <circle cx="64" cy="64" r="46" fill="none" stroke="#3EE2C8" stroke-opacity="0.18" stroke-width="2"/>
-  <path d="M22 98h84" stroke="#3EE2C8" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round"/>
-  <path d="M46 98L58 46h12l12 52" fill="none" stroke="#3EE2C8" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M52 46h24M55 62h18M58 78h12" stroke="#3EE2C8" stroke-opacity="0.85" stroke-width="3" stroke-linecap="round"/>
-  <path d="M24 42L38 46L30 58L46 62" fill="none" stroke="#3EE2C8" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M96 34l-14 22h10l-6 20 18-26h-11z" fill="#FAC542"/>
-</svg>
