@@ -3,7 +3,7 @@
 - 文档版本：2.0
 - 创建日期：2026-10-25（v1 同日，git 提交 `1eb6efb` 保留历史）
 - 状态：v1 已获用户批准（技术栈/范围/视觉三大决策）；**v2 按用户指令依据新数据包升级**："按照项目目录下 电网值班室_levels.json 进一步升级完善，增加用户角色、知识提示、技能提示、操作提示等，让用户具有沉浸式感觉。"
-- 数据源：`D:\grid-duty-web\电网值班室_levels.json`（`meta.version 0.1.0`，8 关 6 角色 8 技能；实现时嵌入为 `data/levels.js`）
+- 数据源：`电网值班室_levels.json`（`meta.version 0.1.0`，8 关 6 角色 8 技能；当前位于 `D:\grid-duty-web\stepx-ai\电网值班室_levels.json`，实现时嵌入为 `data/levels.js`）
 - v2 核心变化：8 关新结构（`meters + actions/effects`）、6 角色（bonus/blind）、8 技能（from_level 解锁）、三级提示系统（知识/技能/操作）、沉浸式值班体验
 
 ---
@@ -35,6 +35,7 @@
 | 托管 | GitHub Pages（`https://goldhat-0907.github.io/grid-duty-web/`） |
 | 范围 | 新数据包 8 关全部实现（取代 v1 的 7 关旧包） |
 | 数据源 | `电网值班室_levels.json`（v0.1.0），嵌入 `data/levels.js`（ES 模块导出，file:// 与 https 均可用） |
+| 参考原型 | `stepx-ai/wzki6i/`（StepX Studio 导出的构建版）作为行为参考，不参与运行时依赖 |
 | 视觉 | 深色 SCADA 值班台，SVG + CSS 矢量绘制，禁止位图 |
 | 本地目录 | `D:\grid-duty-web`（与威胁情报仓库隔离，独立 git 仓库） |
 | 仓库名 | `grid-duty-web`，新建独立 GitHub 仓库 |
