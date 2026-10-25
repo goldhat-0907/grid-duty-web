@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- 滚动条作用域：App UI（含小游戏）默认隐藏滚动条，作用域为 html.ui-app
+     （见 src/shared/styles/globals.css）。 -->
+<html lang="zh-CN" class="ui-app">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover 是安全区适配的前提；不禁止缩放，双指缩放的误触由 touch-action 控制 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0B121A" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon-DuSgeiQ9.svg" />
+    <meta name="format-detection" content="telephone=no,email=no,address=no" />
+    <!-- 登录态作用域：App UI 与 Admin UI 各自独立保存会话，同源部署 / 预览下也不会互相串号。
+         admin.html 声明 content="admin"；该值由 src/shared/track.ts 读取，决定 auth 的 storageKey，不要删除或改错。 -->
+    <meta name="ui-scope" content="app" />
+    <!-- 初始文档标题保持中性：应用未命名时 APP_NAME 可能还是平台注入的占位值（如项目 ID），
+         不能直接当标题暴露。页面用 usePageTitle() 声明标题后 document.title 会随之更新，
+         没有声明时回到 src/shared/config/app.ts 的 DOC_TITLE_FALLBACK（与这里保持一致）。 -->
+    <title>电网值班室：算电协同</title>
+    <script type="module" crossorigin src="./assets/web-D-qMEmgo.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/web-DZXGTLci.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      壳桥接 SDK（/sdk/capsule.js）不在这里静态引入：浏览器 / 平台预览没有它，直接写会 404。
+      它由构建期插件（vite.config.ts 的 capsuleSdkInjectPlugin）注入进产物 HTML，只在壳内可达
+      （测试包主机 appassets.t-stepos.com，线上包 appassets.stepaos.com），不要手写 <script> 到这里。
+      预览里加载不到时桥接层回落到 mock（见 src/shared/bridge/loader.ts）。
+    -->
+  </body>
+</html>
