@@ -1,0 +1,46 @@
+/* css/tokens.css — SCADA 设计令牌：颜色/字体/间距/阴影/辉光 */
+:root {
+  /* 背景与面板 */
+  --bg-0: #0B1220;
+  --bg-1: #0E1A2B;
+  --panel: #131F33;
+  --panel-2: #182742;
+  --border: #1E2C45;
+  --border-bright: #2A3D5F;
+
+  /* 语义色 */
+  --ok: #2E9E5B;
+  --ok-dim: rgba(46, 158, 91, 0.16);
+  --warn: #E2A93B;
+  --warn-dim: rgba(226, 169, 59, 0.16);
+  --fault: #D0473C;
+  --fault-dim: rgba(208, 71, 60, 0.18);
+  --info: #3B82F6;
+  --info-dim: rgba(59, 130, 246, 0.16);
+
+  /* 文本 */
+  --text: #E6EDF7;
+  --text-dim: #8CA3C0;
+  --text-faint: #5B6E8C;
+
+  /* 字号 */
+  --fs-brief: 15px;
+  --fs-label: 13px;
+  --fs-value: 16px;
+  --fs-title: 22px;
+
+  /* 间距 / 圆角 / 触控 */
+  --gap: 10px;
+  --radius: 10px;
+  --radius-sm: 7px;
+  --min-touch: 44px;
+
+  /* 辉光 */
+  --glow-ok: 0 0 8px rgba(46, 158, 91, 0.55);
+  --glow-warn: 0 0 8px rgba(226, 169, 59, 0.55);
+  --glow-fault: 0 0 12px rgba(208, 71, 60, 0.7);
+  --glow-info: 0 0 8px rgba(59, 130, 246, 0.5);
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+}

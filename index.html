@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0B1220" />
+    <title>电网值班室：算电协同</title>
+    <meta name="description" content="面向电气/能源专业学生的沉浸式电网值班教学游戏：11 关值班、7 种岗位、三级提示。" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header id="hud" class="hidden"></header>
+      <main id="stage"></main>
+      <footer id="dock"></footer>
+    </div>
+    <div id="toast"></div>
+
+    <!-- 数据与体验层 -->
+    <script src="js/data/levels.js"></script>
+    <script src="js/data/enrichment.js"></script>
+    <!-- 引擎与规则 -->
+    <script src="js/engine/engine.js"></script>
+    <script src="js/engine/sim.js"></script>
+    <script src="js/scoring.js"></script>
+    <script src="js/roles.js"></script>
+    <script src="js/skills.js"></script>
+    <script src="js/hints.js"></script>
+    <script src="js/fx.js"></script>
+    <script src="js/state.js"></script>
+    <!-- 渲染 -->
+    <script src="js/render/charts.js"></script>
+    <script src="js/render/persona.js"></script>
+    <script src="js/render/dashboard.js"></script>
+    <!-- UI -->
+    <script src="js/ui/map.js"></script>
+    <script src="js/ui/prepare.js"></script>
+    <script src="js/ui/brief.js"></script>
+    <script src="js/ui/controls.js"></script>
+    <script src="js/ui/settle.js"></script>
+    <script src="js/ui/review.js"></script>
+    <script src="js/ui/codex.js"></script>
+    <!-- 入口 -->
+    <script src="js/main.js"></script>
+  </body>
+</html>

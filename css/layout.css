@@ -1,0 +1,155 @@
+/* css/layout.css — 竖屏布局：top HUD / middle 值班台 / bottom 动作台 / overlay */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 0%, var(--bg-1), var(--bg-0) 70%);
+  color: var(--text);
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#app {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: 520px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* HUD 顶栏 */
+#hud {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: 8px var(--gap);
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-label);
+  color: var(--text-dim);
+  flex: 0 0 auto;
+  min-height: var(--min-touch);
+}
+#hud .hud-name { color: var(--text); font-weight: 600; flex: 1; }
+#hud .hud-role { color: var(--info); }
+#hud .hud-clock { color: var(--warn); font-variant-numeric: tabular-nums; }
+#hud .hud-used { color: var(--text-faint); font-variant-numeric: tabular-nums; }
+#hud.hidden { display: none; }
+
+/* 值班台 / 舞台 */
+#stage {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--gap);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#stage::-webkit-scrollbar { display: none; }
+
+/* 动作台 */
+#dock {
+  flex: 0 0 auto;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  padding: 8px var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#dock:empty { display: none; }
+
+/* Toast 浮层 */
+#toast {
+  position: fixed;
+  left: 50%;
+  top: 12dvh;
+  transform: translateX(-50%);
+  z-index: 60;
+  width: min(92vw, 460px);
+  pointer-events: none;
+}
+#toast .toast {
+  background: var(--panel-2);
+  border: 1px solid var(--border-bright);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: var(--fs-brief);
+  box-shadow: var(--glow-info);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.25s var(--ease-standard), transform 0.25s var(--ease-standard);
+}
+#toast.show .toast { opacity: 1; transform: translateY(0); }
+#toast .toast.bad { border-color: var(--fault); box-shadow: var(--glow-fault); }
+#toast .toast.good { border-color: var(--ok); box-shadow: var(--glow-ok); }
+
+/* 表计网格 */
+.meter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+}
+
+/* 准备页（进局前设置） */
+.prepare-screen { animation: dialog-in 0.35s var(--ease-standard); }
+.p-title { text-align: center; padding: 18px 0 6px; }
+.p-title-main { font-size: 30px; font-weight: 800; letter-spacing: 4px; color: var(--text); text-shadow: var(--glow-info); }
+.p-title-sub { display: block; font-size: var(--fs-label); color: var(--text-dim); margin-top: 4px; letter-spacing: 2px; }
+.p-section { margin-bottom: 16px; }
+.p-sec-title { font-size: var(--fs-label); color: var(--info); font-weight: 600; margin-bottom: 8px; }
+.p-sec-hint { color: var(--text-faint); font-weight: 400; margin-left: 6px; }
+.p-footer { display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 6px; }
+
+/* 动作台 */
+.action-dock {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+.dock-row { display: flex; gap: 8px; justify-content: space-between; }
+
+/* 结算/复盘/简报浮层卡片 */
+.brief-panel, .settle-panel, .review-panel { animation: slide-up 0.35s var(--ease-standard); }
+.brief-panel { max-width: 460px; margin: 0 auto; }
+.settle-panel, .review-panel { max-width: 460px; margin: 0 auto; }
+
+/* 值班手册弹层 */
+.codex-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.82);
+  display: flex;
+  flex-direction: column;
+  z-index: 40;
+  padding: 14px;
+  animation: dialog-in 0.3s var(--ease-standard);
+}
+.codex-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text);
+  font-weight: 700;
+  font-size: var(--fs-brief);
+  padding: 4px 0 8px;
+}
+.codex-close { background: none; border: none; color: var(--text-dim); font-size: 24px; line-height: 1; min-width: var(--min-touch); min-height: var(--min-touch); }
+.codex-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.codex-panel { display: none; overflow-y: auto; flex: 1 1 auto; scrollbar-width: none; }
+.codex-panel::-webkit-scrollbar { display: none; }
+.codex-panel.active { display: block; }
+
+/* 值班地图时间线 */
+.map-timeline {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+}
+.map-timeline::-webkit-scrollbar { display: none; }
